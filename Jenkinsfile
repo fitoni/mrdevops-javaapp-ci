@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages{
-        stage('sonar quality check'){
+        stage('Sonar Quality Check'){
             agent{
                 docker{
                     image 'maven'
@@ -14,6 +14,14 @@ pipeline {
                        // some block
                        sh 'mvn clean package sonar:sonar'
                     }
+                }
+            }
+        }
+
+        stage('Quality Gate Status'){
+            steps{
+                script{
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
