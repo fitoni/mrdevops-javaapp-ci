@@ -25,5 +25,13 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker build & docker push to My Own Nexus Repo'){
+            steps{
+                script{
+                    
+                }
+            }
+        }
     }
 }
