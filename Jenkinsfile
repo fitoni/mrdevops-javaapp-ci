@@ -19,12 +19,28 @@ pipeline {
                 }
             }            
         }
+
         stage('Quality Gate Status'){
             steps{
                 script{
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
-        }        
+        }   
+
+        stage('Docker build & docker push to My Own Nexus Repo'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
+                        sh ''' 
+                            docker build -t 108.136.59.57:8083/springapp:${VERSION} . 
+                            docker login -u admin -p $nexus_creds 108.136.59.57:8083
+                            docker push 108.136.59.57:8083/springapp:${VERSION}
+                            docker rmi 108.136.59.57:8083/springapp:${VERSION}
+                        '''
+                    }
+                }
+            }
+        }             
     }
 }
