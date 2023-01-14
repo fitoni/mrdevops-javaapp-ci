@@ -55,7 +55,7 @@ pipeline {
             }
         }    
 
-        state('Pushing the helm chart onto My Own Nexus Repo'){
+        stage('Pushing the helm chart onto My Own Nexus Repo'){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]){
