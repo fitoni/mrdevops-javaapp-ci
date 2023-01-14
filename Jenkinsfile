@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment{
         VERSION="${env.BUILD_ID}"
-        helmversion=""
     }
 
     stages{
@@ -63,7 +62,7 @@ pipeline {
                         dir('kubernetes/'){
                             sh '''
                             helmversion=$(helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ')
-                            tar -czvf myapp-$(helmversion).tgz myapp/
+                            tar -czvf myapp-${helmversion}.tgz myapp/
                             curl -u admin:$nexus_creds http://108.136.59.57:8081/repository/devops-helm-hosted/ --upload-file myapp-${helmversion}.tgz -v 
                             '''
                         }
