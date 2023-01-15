@@ -28,20 +28,20 @@ pipeline {
             }
         }   
 
-        // stage('Docker build & docker push to My Own Nexus Repo'){
-        //     steps{
-        //         script{
-        //             withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
-        //                 sh ''' 
-        //                     docker build -t 108.136.59.57:8083/springapp:${VERSION} . 
-        //                     docker login -u admin -p $nexus_creds 108.136.59.57:8083
-        //                     docker push 108.136.59.57:8083/springapp:${VERSION}
-        //                     docker rmi 108.136.59.57:8083/springapp:${VERSION}
-        //                 '''
-        //             }
-        //         }
-        //     }
-        // }      
+        stage('Docker build & docker push to My Own Nexus Repo'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus_password', variable: 'nexus_creds')]) {
+                        sh ''' 
+                            docker build -t 108.137.90.176:8083/springapp:${VERSION} . 
+                            docker login -u admin -p $nexus_creds 108.137.90.176:8083
+                            docker push 108.137.90.176:8083/springapp:${VERSION}
+                            docker rmi 108.137.90.176:8083/springapp:${VERSION}
+                        '''
+                    }
+                }
+            }
+        }      
 
         // stage('Identifying misconfigurations using Datree in Helm Charts'){
         //     steps{
